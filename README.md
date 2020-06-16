@@ -1,4 +1,4 @@
-# SJTU $\pi2.0$-超算简明教程
+# SJTU PI2.0-超算简明教程
 
 *Author: Kyle Chen*
 
@@ -27,11 +27,11 @@ ssh stu438@login.hpc.sjtu.edu.cn
 
 使用PuTTY进行登陆
 
-![](./pic/pasted-image.png)
+<img src="./pic/pasted-image.png" width=700 style="float:none;" />
 
 运行PuTTY，在图中红框处输入服务器信息，单击蓝框处保存（以免下次使用重复输入）
 
-![](./pic/putty2.png)
+<img src="./pic/putty2.png" width=700 style="float:none;" />
 
 根据弹出终端窗口显示指令，输入账号密码（注意，密码输入过程中，终端信息不回更新），`Enter`登录。
 
@@ -54,11 +54,11 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
 
 使用`WinSCP`进行文件传输。
 
-![](./pic/winscp.png)
+<img src="./pic/winscp.png" width=700 style="float:none;" />
 
 按照上图红框内所示，输入设置，其中用户名与密码为hpc服务器登陆的账号密码，随后单击`保存`，单击登陆与服务器建立连接。
 
-![](./pic/winscp2.png)
+<img src="./pic/winscp2.png" width=700 style="float:none;" />
 
 左侧红框内为本地文件列表，右侧蓝框内为远程服务器文件列表，可以通过鼠标拖拽的方式进行文件上传、下载。
 
@@ -214,7 +214,7 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
 
 2. 服务器连接因超时或网络不稳定而断开
 
-   ![](./pic/pasted-image-2.png)
+   <img src="./pic/pasted-image-2.png" width=700 style="float:none;" />
 
    在PuTTY登陆界面左侧设置选项栏中选择Connection，在右侧对应红框处，设置保持活跃时间 240。随后回到左侧Session对应服务器登陆界面，保存设置，并登陆即可。
 
@@ -251,13 +251,13 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
 
    - Windows
 
-     ```powershell
+     ```shell
      D:\\Documents\\data\\raw_data.npy
      ```
 
    - Linux/Mac
 
-     ```powershell
+     ```shell
      /home/user/Documents/data/raw_data.npy
      ```
 
@@ -269,7 +269,7 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
    sinfo
    ```
 
-   ![image-20200616144451133](./pic/sinfo.png)
+   <img src="./pic/sinfo.png" width=700 style="float:none;" />
 
    如上图所示，红框内为$\pi 2.0$超算中心的GPU节点，dgx2，的状态。
 
