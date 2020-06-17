@@ -263,7 +263,20 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
 
    请注意区分。
 
-5. 查看队列状态-`sinfo`命令
+5. 任务超时被中断问题。
+
+   在SLURM任务脚本中，修改脚本开头脚本参数中
+
+   ```shell
+   #SBATCH --time=00:30:00
+   ```
+
+   - 其中`00:30:00`表示最大运行运行时间30分钟，超时即会被slurm强制终止。
+   - 适当设定足够长的最大运行时间，可保证程序完整运行。
+   - 注意，`dgx2`队列单任务最大允许运行时长为7天`7-00:00:00`。
+   - 对于普通用户，设置过长的最大运行时间，可能导致任务长时间处于等待（PD）状态，无法正常运行。
+
+6. 查看队列状态-`sinfo`命令
 
    ```shell
    sinfo
@@ -288,7 +301,7 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
 
    更多关于`sinfo`详细信息，参见[sinfo原文档](https://slurm.schedmd.com/sinfo.html)。
 
-6. 查看任务状态-`squeue`命令
+7. 查看任务状态-`squeue`命令
 
    使用`squeue`命令查看961975任务运行状态，如下：
 
@@ -301,7 +314,7 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
 
    更多关于`squeue`详细信息，参见[squeue原文档](https://slurm.schedmd.com/squeue.html)。
 
-7. 取消已提交任务-`scancel`命令
+8. 取消已提交任务-`scancel`命令
 
    取消 961975 任务：
 
@@ -317,7 +330,7 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
 
    更多关于`scancel`详细信息，参见[scancel原文档](https://slurm.schedmd.com/scancel.html)。
 
-8. 使用`srun`命令登陆计算节点，进行交互式任务递交与执行
+9. 使用`srun`命令登陆计算节点，进行交互式任务递交与执行
 
    ```bash
    srun --partition=dgx2 --nodelist=vol07 --mem=6000 --gres=gpu:1 -n1 -N1 --pty --preserve-env $SHELL
