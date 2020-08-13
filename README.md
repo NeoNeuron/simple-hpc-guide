@@ -82,7 +82,7 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
    # 关闭conda base环境登陆自启动(不关闭会导致SLURM脚本无法正常运行)
    conda config --set auto_activate_base False
    # 创建名为tf-env的python环境，python版本为3.7
-   conda create -n tf-env python3.7
+   conda create -n tf-env python=3.7
    # 激活tf-env环境
    source activate tf-env
    # 安装科学计算必要python库
