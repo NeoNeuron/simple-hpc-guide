@@ -187,6 +187,120 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
      cat 961975.out
      ```
 
+## SLURM远程登录Jupyter Notebook
+
+**参考资料:** [Slurm远程登录Jupyter Notebook](https://www.cnblogs.com/cookielbsc/p/12411560.html), [分享脚本远程登陆 Jupyter Notebook](https://zhuanlan.zhihu.com/p/65130699)
+
+使用已部署SLURM的服务器或高性能计算资源（GPU和CPU）运行`jupyter notebook`时，通常会遇到以下问题。
+
+- 通过`ssh`只能登录到slurm的登录管理节点，再通过登录节点使用slurm作业调度系统，提交slurm脚本运行作业。
+- 无法再登录节点直接运行`jupyter`并通过`ssh`转发端口。
+
+解决方案：
+
+1. 通过`srun`命令申请交互`bash`，在其中运行`jupyter notebook`， 并通过`ssh`转发端口至本地。
+2. 通过编辑slurm脚本，通过`sbatch`发送并启动`jupyter`，同时转发至本地端口。
+
+### 交互`bash`启动`jupyter`
+
+1. 在计算节点启动`jupyter`
+
+   ````bash
+   # srun申请队列gpu-tesla，申请资源内存10G，1块gpu，申请打开交互bash。
+   srun --partition=gpu-tesla --mem=10G --gres=gpu:1 --pty bash
+   # module加载anaconda及所需gpu驱动等
+   module load anaconda3 cuda/10.2
+   # 激活python环境 your_env
+   conda activate your_env
+   # 启动jupyter，指定port（可指定其他未被占用的端口），指定ip（此处以node9为例，若登录其他节点，请使用prompt中显示的节点名称）
+   jupyter notebook --no-browser --port=8879 --ip=node9
+   ````
+
+2. 在本地连接`jupyter`
+
+   ```bash
+   # 8880为本地端口，node9:8879为服务器jupyter指定ip和指定端口，your_name为用户名，cluster_url为服务器ip
+   ssh -N -L 8880:node9:8879 your_name@cluster_url
+   ```
+
+3. 打开浏览器，通过`localhost:8880`访问
+
+   ```bash
+   # 对于浏览器要求的token，复制启动jupyter后返回的信息中的token即可
+   "http://127.0.0.1:8880/?token=260544c76ee3eeca*****************d8523886dde4656"
+   ```
+
+### Slurm脚本启动`jupiter`
+
+1. 通过`sbatch`提交任务：
+
+   ```bash
+   sbatch jupyter-server.sh
+   ```
+
+2. 本地连接`jupyter`，并通过浏览器打开。（同交互`bash`启动`jupyter`中2-3步操作) 
+
+   查看当前目录下log文件和error文件，通过log文件查看服务器端口，通过error文件查看token。
+
+服务器端开启 Jupyter Notebook 服务的脚本如下：
+
+```bash
+#!/bin/bash
+#SBATCH --partition you_partation
+#SBATCH --nodes 1
+#SBATCH --ntasks 1
+#SBATCH --cpus-per-task 5
+#SBATCH --mem-per-cpu 3G
+#SBATCH --time 24:00:00
+#SBATCH --job-name jupyter-notebook
+#SBATCH --output jupyter-notebook-%J.log
+#SBATCH --error jupyter-notebook-%J.err
+#SBATCH --mail-user=your_email@sjtu.edu.cn
+
+# get tunneling info
+# DO NOT CHANGE
+XDG_RUNTIME_DIR=""
+port=$(shuf -i8000-9999 -n1)
+node=$(hostname -s)
+user=$(whoami)
+cluster=$(hostname -f | awk -F"." '{print $2}')
+
+### 在这里添加你的服务器地址
+clusterurl="202.120.*.*"
+
+export PATH=$PATH:~/.local/bin
+
+# print tunneling instructions jupyter-log
+echo -e "
+MacOS or linux terminal command to create your ssh tunnel:
+ssh -N -L ${port}:${node}:${port} ${user}@${clusterurl}
+ 
+ Here is the MobaXterm info:
+
+ Forwarded port:same as remote port
+ Remote server: ${node}
+ Remote port: ${port}
+ SSH server: ${cluster}.${clusterurl}
+ SSH login: $user
+ SSH port: 22
+
+ Use a Browser on your local machine to go to:
+ localhost:${port} (prefix w/ https:// if using password)
+
+ or copy the URL from below and put there localhost after http:// so it would be something like:
+ http://localhost:9499/?token=86c93ba16aaead7529a5da0e5e5a46be7ad8cfea35b2d49f
+ "
+
+# 在这里添加你的module加载配置
+# load modules or conda environments here
+# e.g. :
+# module load anaconda3 
+# conda activate your_env
+# DON'T USE ADDRESS BELOW. 
+# DO USE TOKEN BELOW.
+jupyter-notebook --no-browser --port=${port} --ip=${node}
+```
+
 ## 常见问题
 
 1. 重置密码：
