@@ -48,7 +48,7 @@ ssh -N -L ${port}:${node}:${port} ${user}@${clusterurl}
 # load modules or conda environments here
 # e.g. :
 # module load anaconda3 
-# conda activate your_env
+# source activate your_env
 # DON'T USE ADDRESS BELOW. 
 # DO USE TOKEN BELOW.
 jupyter-notebook --no-browser --port=${port} --ip=${node}
