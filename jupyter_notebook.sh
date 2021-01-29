@@ -25,8 +25,9 @@ export PATH=$PATH:~/.local/bin
 
 # print tunneling instructions jupyter-log
 echo -e "
-MacOS or linux terminal command to create your ssh tunnel:
-ssh -N -L ${port}:${node}:${port} ${user}@${clusterurl}
+Copy macOS or linux terminal command below to create your ssh tunnel:
+
+  ssh -N -L ${port}:${node}:${port} ${user}@${clusterurl}
  
  Here is the MobaXterm info:
 

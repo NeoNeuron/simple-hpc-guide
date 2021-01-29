@@ -248,7 +248,16 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
 
 2. 本地连接`jupyter`，并通过浏览器打开。（同交互`bash`启动`jupyter`中2-3步操作) 
 
-   查看当前目录下log文件，找到相应服务器端口，以及`Jupyter Notebook`的token。
+   查看当前目录下log文件，找到相应服务器端口，以及`jupyter notebook`的token。
+   * 查看`ssh`隧穿命令:
+      ```bash
+      cat jupyter_notebook_[your slurm job-id].log|grep ssh
+      ```
+   * 查看`jupyter notebook` URL:
+      ```bash
+      cat jupyter_notebook_[your slurm job-id].log|grep 127.0.0.1
+      ```
+
 
 服务器端开启 Jupyter Notebook 服务的脚本如下：
 
@@ -280,8 +289,9 @@ export PATH=$PATH:~/.local/bin
 
 # print tunneling instructions jupyter-log
 echo -e "
-MacOS or linux terminal command to create your ssh tunnel:
-ssh -N -L ${port}:${node}:${port} ${user}@${clusterurl}
+Copy macOS or linux terminal command below to create your ssh tunnel:
+
+  ssh -N -L ${port}:${node}:${port} ${user}@${clusterurl}
  
  Here is the MobaXterm info:
 
