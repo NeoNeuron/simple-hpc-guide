@@ -243,12 +243,12 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
 1. 通过`sbatch`提交任务：
 
    ```bash
-   sbatch jupyter-server.sh
+   sbatch jupyter_notebook.sh
    ```
 
 2. 本地连接`jupyter`，并通过浏览器打开。（同交互`bash`启动`jupyter`中2-3步操作) 
 
-   查看当前目录下log文件和error文件，通过log文件查看服务器端口，通过error文件查看token。
+   查看当前目录下log文件，找到相应服务器端口，以及`Jupyter Notebook`的token。
 
 服务器端开启 Jupyter Notebook 服务的脚本如下：
 
@@ -260,9 +260,9 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
 #SBATCH --cpus-per-task 5
 #SBATCH --mem-per-cpu 3G
 #SBATCH --time 24:00:00
-#SBATCH --job-name jupyter-notebook
-#SBATCH --output jupyter-notebook-%J.log
-#SBATCH --error jupyter-notebook-%J.err
+#SBATCH --job-name jupyter_notebook
+#SBATCH --output jupyter_notebook_%J.log
+#SBATCH --error jupyter_notebook_%J.log
 #SBATCH --mail-user=your_email@sjtu.edu.cn
 
 # get tunneling info
@@ -274,7 +274,7 @@ user=$(whoami)
 cluster=$(hostname -f | awk -F"." '{print $2}')
 
 ### 在这里添加你的服务器地址
-clusterurl="202.120.*.*"
+clusterurl="xxx.xxx.xxx.xxx"
 
 export PATH=$PATH:~/.local/bin
 
@@ -304,6 +304,8 @@ ssh -N -L ${port}:${node}:${port} ${user}@${clusterurl}
 # e.g. :
 # module load anaconda3 
 # source activate your_env
+
+
 # DON'T USE ADDRESS BELOW. 
 # DO USE TOKEN BELOW.
 jupyter-notebook --no-browser --port=${port} --ip=${node}

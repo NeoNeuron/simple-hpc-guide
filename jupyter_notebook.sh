@@ -5,9 +5,9 @@
 #SBATCH --cpus-per-task 5
 #SBATCH --mem-per-cpu 3G
 #SBATCH --time 24:00:00
-#SBATCH --job-name jupyter-notebook
-#SBATCH --output jupyter-notebook-%J.log
-#SBATCH --error jupyter-notebook-%J.err
+#SBATCH --job-name jupyter_notebook
+#SBATCH --output jupyter_notebook_%J.log
+#SBATCH --error jupyter_notebook_%J.log
 #SBATCH --mail-user=your_email@sjtu.edu.cn
 
 # get tunneling info
@@ -19,7 +19,7 @@ user=$(whoami)
 cluster=$(hostname -f | awk -F"." '{print $2}')
 
 ### 在这里添加你的服务器地址
-clusterurl="202.120.*.*"
+clusterurl="xxx.xxx.xxx.xxx"
 
 export PATH=$PATH:~/.local/bin
 
@@ -49,6 +49,8 @@ ssh -N -L ${port}:${node}:${port} ${user}@${clusterurl}
 # e.g. :
 # module load anaconda3 
 # source activate your_env
+
+
 # DON'T USE ADDRESS BELOW. 
 # DO USE TOKEN BELOW.
 jupyter-notebook --no-browser --port=${port} --ip=${node}
