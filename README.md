@@ -320,6 +320,7 @@ Copy macOS or linux terminal command below to create your ssh tunnel:
 # DO USE TOKEN BELOW.
 jupyter-notebook --no-browser --port=${port} --ip=${node}
 ```
+> See also: [Remote accessing Jupyter Notebook](https://github.com/NeoNeuron/Linux-guide-for-researcher/blob/master/README.md#access-jupyter-notebook)
 
 ## 常见问题
 
