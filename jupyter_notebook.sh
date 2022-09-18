@@ -45,13 +45,6 @@ Copy macOS or linux terminal command below to create your ssh tunnel:
  http://localhost:9499/?token=86c93ba16aaead7529a5da0e5e5a46be7ad8cfea35b2d49f
  "
 
-# 在这里添加你的module加载配置
-# load modules or conda environments here
-# e.g. :
-# module load anaconda3 
-# source activate your_env
-
-
 # DON'T USE ADDRESS BELOW. 
 # DO USE TOKEN BELOW.
 jupyter-notebook --no-browser --port=${port} --ip=${node}
