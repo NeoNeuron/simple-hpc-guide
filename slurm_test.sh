@@ -11,10 +11,6 @@
 #SBATCH --mail-type=end
 #SBATCH --mail-user=your_email@sjtu.edu.cn
 
-module load cuda/10.1.243-gcc-4.8.5   # for Tensorflow >= 2.0
-module load cuda/10.0.130-gcc-4.8.5   # for Tensorflow == 1.15
-module load cudnn/7.6.5.32-10.1-linux-x64-gcc-4.8.5
-
 # if you want to switch working directory
 # cd working_dir/
 

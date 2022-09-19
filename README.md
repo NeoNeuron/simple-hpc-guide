@@ -188,12 +188,12 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
     ```bash
     # check availble modules
     module avail
-    # Load module of anaconda and cuda
-    module load miniconda3 cuda/10.1
+    # Load module of anaconda
+    module load miniconda3
     # check whether module loading is successful
     module list
     # setup auto-module-load in .bashrc
-    echo "module load miniconda3 cuda/10.1" >> .bashrc
+    echo "module load miniconda3" >> .bashrc
     # conda initilization
     conda init
 
@@ -207,7 +207,7 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
     echo "conda activate myenv" >> .bashrc
 
     # install pytorch
-    conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch -y
+    conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch -y
 
     # install jupyter kernel (optional)
     python -m ipykernel install --user --name myenv --display-name "Python (myenv)"
@@ -240,10 +240,6 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
     #SBATCH --time=00:30:00
     #SBATCH --mail-type=end
     #SBATCH --mail-user=your_email@sjtu.edu.cn
-    
-    module load cuda/10.1.243-gcc-4.8.5   # for Tensorflow >= 2.0
-    module load cuda/10.0.130-gcc-4.8.5   # for Tensorflow == 1.15
-    module load cudnn/7.6.5.32-10.1-linux-x64-gcc-4.8.5
     
     # if you want to switch working directory
     # cd working_dir/
@@ -326,7 +322,7 @@ scp stu438@login.hpc.sjtu.edu.cn:~/data.out ./
     # srun申请队列gpu-tesla，申请资源内存10G，1块gpu，申请打开交互bash。
     srun --partition=gpu-tesla --mem=10G --gres=gpu:1 --pty bash
     # module加载anaconda及所需gpu驱动等
-    module load anaconda3 cuda/10.2
+    module load anaconda3
     # 激活python环境 your_env
     conda activate your_env
     # 启动jupyter，指定port（可指定其他未被占用的端口），指定ip（此处以node9为例，若登录其他节点，请使用prompt中显示的节点名称）

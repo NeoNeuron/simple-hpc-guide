@@ -1,11 +1,11 @@
 # check availble modules
     module avail
-    # Load module of anaconda and cuda
-    module load miniconda3 cuda/10.1
+    # Load module of anaconda
+    module load miniconda3
     # check whether module loading is successful
     module list
     # setup auto-module-load in .bashrc
-    echo "module load miniconda3 cuda/10.1" >> .bashrc
+    echo "module load miniconda3" >> .bashrc
     # conda initilization
     conda init
 
@@ -19,7 +19,7 @@
     echo "conda activate myenv" >> .bashrc
 
     # install pytorch
-    conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch -y
+    conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch -y
 
     # install jupyter kernel (optional)
     python -m ipykernel install --user --name myenv --display-name "Python (myenv)"
